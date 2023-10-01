@@ -1,0 +1,13 @@
+-- https://leetcode.com/problems/rising-temperature/?envType=study-plan-v2&envId=top-sql-50
+-- Solution
+-----------
+select id as ID
+from (
+    select id, recordDate, temperature , 
+    lag(temperature) over(order by recordDate) as lgtemp,
+    lag(recordDate) over(order by recordDate) as lgdate
+    from Weather
+    )
+where temperature > lgtemp
+and recordDate - lgdate = 1
+-----------
