@@ -1,0 +1,13 @@
+-- https://leetcode.com/problems/average-time-of-process-per-machine/?envType=study-plan-v2&envId=top-sql-50
+-- Solution
+-----------
+select aend.machine_id as MACHINE_ID, 
+round(avg(aend.timestamp - astart.timestamp), 3) as processing_time
+from Activity astart, Activity aend
+where astart.machine_id = aend.machine_id
+and astart.process_id = aend.process_id
+and astart.activity_type = 'start'
+and aend.activity_type = 'end'
+group by aend.machine_id
+order by aend.machine_id
+-----------
