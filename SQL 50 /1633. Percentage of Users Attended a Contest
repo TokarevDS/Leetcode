@@ -1,0 +1,12 @@
+-- https://leetcode.com/problems/percentage-of-users-attended-a-contest/?envType=study-plan-v2&envId=top-sql-50
+-- Solution
+-----------
+with tmp as (select contest_id, count(user_id) as c
+from Register r
+group by contest_id)
+
+select tmp.contest_id, round(100 * tmp.c / count(*), 2) as percentage
+from tmp, Users
+group by tmp.contest_id, tmp.c
+order by tmp.c desc, tmp.contest_id
+-----------
