@@ -1,0 +1,22 @@
+-- https://leetcode.com/problems/game-play-analysis-iv/description/?envType=study-plan-v2&envId=top-sql-50
+-- Solution
+-----------
+with active as (
+    select 
+        player_id,
+        event_date,
+        row_number() over(partition by player_id order by event_date) as r
+    from 
+        Activity
+)
+
+select 
+    round(count(distinct a2.player_id) / count(distinct a1.player_id), 2) as fraction
+from 
+    active a1
+left join
+    activity a2 
+on a1.player_id = a2.player_id
+and a2.event_date - a1.event_date = 1
+where a1.r = 1
+-----------
