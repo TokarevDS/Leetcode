@@ -1,0 +1,9 @@
+-- https://leetcode.com/problems/managers-with-at-least-5-direct-reports/description/?envType=study-plan-v2&envId=top-sql-50
+-- Solution
+-----------
+select e.name
+from Employee e
+where id in (select em.managerId from Employee em 
+group by em.managerId
+having count(*) >= 5)
+-----------
