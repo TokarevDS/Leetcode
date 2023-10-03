@@ -1,0 +1,23 @@
+-- https://leetcode.com/problems/product-sales-analysis-iii/description/?envType=study-plan-v2&envId=top-sql-50
+-- Solution
+-----------
+with sale as (select
+    product_id,
+    min(year) as year
+from
+    Sales
+group by
+    product_id)
+
+select 
+    s.product_id,
+    s.year as first_year,
+    ss.quantity,
+    ss.price
+from 
+    sale s
+join 
+    Sales ss 
+on s.year = ss.year
+and s.product_id = ss.product_id
+-----------
