@@ -1,0 +1,18 @@
+-- https://leetcode.com/problems/the-number-of-employees-which-report-to-each-employee/?envType=study-plan-v2&envId=top-sql-50
+-- Solution
+-----------
+select
+    rem.employee_id,
+    rem.name,
+    count(em.reports_to) as reports_count,
+    round(avg(em.age)) as average_age
+from 
+    Employees em
+join
+    Employees rem on rem.employee_id = em.reports_to
+group by
+    rem.employee_id,
+    rem.name
+order by
+    rem.employee_id
+-----------
