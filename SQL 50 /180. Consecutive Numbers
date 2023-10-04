@@ -1,0 +1,22 @@
+-- https://leetcode.com/problems/consecutive-numbers/?envType=study-plan-v2&envId=top-sql-50
+-- Solution
+-----------
+with lags as 
+(
+    select 
+        num, 
+        lag(num) over(order by id) as num_1, 
+        lag(num, 2) over(order by id) as num_2
+    from
+        Logs
+)
+
+select 
+    distinct num as ConsecutiveNums
+from
+    lags
+where 
+    num = num_1
+and
+    num = num_2
+-----------
