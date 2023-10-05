@@ -1,0 +1,39 @@
+-- https://leetcode.com/problems/exchange-seats/?envType=study-plan-v2&envId=top-sql-50
+-- Solition
+-----------
+(select
+    id - 1 as id,
+    student
+from 
+    Seat
+where
+    id % 2 = 0)
+union
+(select
+    id + 1 as id,
+    student
+from 
+    Seat s
+where
+    id % 2 = 1 and id < (select max(id) from Seat)
+)
+union 
+(select 
+    id as id,
+    student
+from 
+    Seat
+where
+    id = (select max(id) from Seat) and id % 2 = 1)
+order by id
+-----------
+select 
+    id, 
+    coalesce(
+        case when id%2=0 
+            then lag(student) over() 
+            else lead(student) over() end,
+            student) as student
+from 
+    seat
+-----------
