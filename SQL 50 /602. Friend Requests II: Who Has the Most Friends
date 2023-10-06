@@ -1,0 +1,24 @@
+-- https://leetcode.com/problems/friend-requests-ii-who-has-the-most-friends/description/?envType=study-plan-v2&envId=top-sql-50
+-- Solution
+-----------
+select 
+    friend as id,
+    count(*) as num
+from 
+    (
+        (select
+            requester_id as friend
+        from
+            RequestAccepted)
+        union all
+        (select
+            accepter_id as friend
+        from
+            RequestAccepted)
+    ) as t
+group by 
+    friend
+order by
+    count(*) desc
+limit 1
+-----------
