@@ -1,0 +1,22 @@
+-- https://leetcode.com/problems/investments-in-2016/description/?envType=study-plan-v2&envId=top-sql-50
+-- Solution
+--------------------
+select
+    round(sum(t.tiv_2016)::numeric, 2) as tiv_2016
+from (select
+    ins.tiv_2016
+from
+    Insurance ins
+join Insurance in1
+    on ins.tiv_2015 = in1.tiv_2015 and ins.pid != in1.pid
+left join Insurance in2
+    on ins.lat = in2.lat 
+    and ins.lon = in2.lon
+    and ins.pid != in2.pid
+where
+    in2.pid is null
+group by 
+    ins.pid,
+    ins.tiv_2016
+) as t
+----------------------
